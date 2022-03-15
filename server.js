@@ -14,7 +14,7 @@ const { addRandomRisk, gameState, youLazy, endGame } = require(path.join(__dirna
 
 app.listen(port);
 app.get('/', (req, res) => {
-    res.render(index)
+    res.render()
 })
 
 app.get('/1', (req,res) => {
