@@ -6,6 +6,9 @@ const { youLazy, addRandomRisk, endGame, deleteGameById,
     createGame, 
     loadGameState,
     createGameState,
+    chooseHobby,
+    choosePads,
+    chooseSubject
 } = require("./gameFunctions")
 const app = express();
 const path = require('path');
@@ -27,19 +30,27 @@ app.get('/start', (req, res) => {
     let createdGame = await createGameState(name);
     console.log("createdGame is", createdGame);
     res.send(
-      `Welcome to the game of life ${name} If you want your hobby to be Biking => curl http://localhost:3005/Hobby?hobby=Biking 
+      `Welcome to the game of life ${name} If you want your hobby to be Biking => curl http://localhost:3005/Hobby?hobby=Bike
     , If you want your favourite hobby to be crafts => curl http://localhost:3005/Hobby?hobby=Crafts,
     If you want your favourite hobby to be Swimming => curl http://localhost:3005/Hobby?hobby=Swimming
      `
     );
   });
 
-  app.get("/Hobby", async (req, res) => {
+ app.get("/Hobby", async (req, res) => {
     let hobby = req.query.hobby;
-    let name = await createGameState(hobby);
-    console.log("createdGame is", createdGame);
-    res.send(
-      `Luke's favourite hobby is ${hobby}`
-    );
-  });
+    let choice = chooseHobby(hobby);
+    res.send(choice);  
+ });
 
+ app.get("/Pads", async (req, res) => {
+    let pads = req.query.pads;
+    let choice = choosePads(pads);
+    res.send(choice);  
+ });
+
+ app.get("/Subject", async (req, res) => {
+     let subject = req.query.subject;
+     let choice = chooseSubject(subject);
+     res.send(choice);
+ })
