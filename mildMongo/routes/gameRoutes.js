@@ -1,24 +1,19 @@
 let express = require('express');
 const router = express.Router();
 
-const { youLazy, addRandomRisk, endGame, deleteGameById,
-        findAllGames,
-        findGameById,
-        updateGameById,
-        createGame, 
+const { youLazy, 
+        addRandomRisk, 
+        endGame,             
         loadGameState,
-        createGameState,
         chooseHobby,
         choosePads,
         chooseSubject
     } = require("../model/gameFunctions");
 
 router.get('/start', (req, res) => {
-   
-    res.send(`Welcome to the game of life. Please enter your name here :
-     curl http://localhost:3005/Name?name=
-     or to load a previous game:
-     curl http://localhost:3005/loadGame?gameId=`);
+    let startMessage = startGame();
+    res.send(startMessage);
+    
   });
 
   router.get("/Name", async (req, res) => {

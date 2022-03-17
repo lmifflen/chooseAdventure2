@@ -49,25 +49,25 @@ const { MongoClient, ObjectId } = require("mongodb");
 //   };
 
 
-let gameState = {
-    name: "",
-    risky: 1,
-    inactivity: 1,
-    gameOver: false,
-    hobby: "",
-    subject: "",
-    college: false,
-    kids: false,
-    job: false,
-    midLifeCrisis: "",
-    retire: false
-};
+// let gameState = {
+//     name: "",
+//     risky: 1,
+//     inactivity: 1,
+//     gameOver: false,
+//     hobby: "",
+//     subject: "",
+//     college: false,
+//     kids: false,
+//     job: false,
+//     midLifeCrisis: "",
+//     retire: false
+// };
 
-const loadGameState = async (id) => {
-    let loadedGameState = await findGameById(id);
-    gameState = loadedGameState;
-    return gameState;
-};
+// const loadGameState = async (id) => {
+//     let loadedGameState = await findGameById(id);
+//     gameState = loadedGameState;
+//     return gameState;
+// };
 
 // let createGameState = async (name) => {
 //     let newGameState = await createGame({ name: name, risky: 0, inactivity: 0, gameOver: false, hobby: "",
