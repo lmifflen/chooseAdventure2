@@ -1,14 +1,15 @@
 let express = require('express');
 const router = express.Router();
 
-const { youLazy, 
+const { 
+        startGame,
+        youLazy, 
         addRandomRisk, 
         endGame,             
-        loadGameState,
         chooseHobby,
         choosePads,
         chooseSubject
-    } = require("../model/gameFunctions");
+    } = require("../model/game");
 
 router.get('/start', (req, res) => {
     let startMessage = startGame();
@@ -19,13 +20,7 @@ router.get('/start', (req, res) => {
   router.get("/Name", async (req, res) => {
     let name = req.query.name;
     let createdGame = await createGameState(name);
-    console.log("createdGame is", createdGame);
-    res.send(
-      `Welcome to the game of life ${name} If you want your hobby to be Biking => curl http://localhost:3005/Hobby?hobby=Bike
-    , If you want your favourite hobby to be crafts => curl http://localhost:3005/Hobby?hobby=Crafts,
-    If you want your favourite hobby to be Swimming => curl http://localhost:3005/Hobby?hobby=Swimming
-     `
-    );
+    res.send(createdGame);
   });
 
  router.get("/Hobby", async (req, res) => {
