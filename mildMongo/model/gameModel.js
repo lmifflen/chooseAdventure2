@@ -1,20 +1,40 @@
 const { MongoGridFSChunkError } = require('mongodb');
 const mongoose = require('./mongoose');
 
-const gameSchema = new mongoose.Schema(
-    {name: String, 
-    risky: 0, 
-    inactivity: 0, 
-    gameOver: false, 
-    hobby: String,
-    subject: String,
-    college: false,
-    kids: false,
-    job: false,
-    midLifeCrisis: String,
-    retire: false
-    }
-);
+const gameSchema = new mongoose.Schema({
+    name: {
+        type: String,
+    }, 
+    risky: { 
+        type: Number, 
+        default: 0,
+    },
+    inactivity: { 
+        type: Number,
+        default: 0,
+    },
+    hobby: {
+        type: String,
+    },
+    subject: {
+        type: String,
+    },
+    college: {
+        type: Boolean,
+    },
+    kids: {
+        type: Boolean,
+    },
+    job: {
+        type: Boolean,
+    },
+    midLifeCrisis: {
+        type: String,
+    },
+    retire: {
+        type: Boolean,
+    },
+});
 
 const Game = mongoose.model("Game", gameSchema)
 

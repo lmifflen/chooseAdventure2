@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { 
         startGame,
+        createGameState,
         youLazy, 
         addRandomRisk, 
         endGame,             

@@ -24,22 +24,52 @@ const { deleteGameById,
             gameState.risky += 1 * Math.random();
         }
     }
-let gameState = () => {
-
-}
-
-const startGame = () => {
-    return `Welcome to the game of life. Please enter your name here :
-    curl http://localhost:3005/Name?name=`
+let gameState = {
+    name: "",
+    risk: 0,
+    inactivity: 0,
+    hobby: "",
+    subject: "",
+    kids: false,
+    job: false,
+    midLifeCrisis: false,
+    retire: false,
 };
 
+// const startGame = () => {
+//     return `Welcome to the game of life. Please enter your name 
+//     http://localhost:3005/api/Name?name=`;
+// };
 
-const createdGameState = async (name) => {
-    let newGameId = await createGame ({ name: name });
-    let message = `Welcome to the game of life ${name} If you want your hobby to be Biking => curl http://localhost:3005/Hobby?hobby=Bike
-    , If you want your favourite hobby to be crafts => curl http://localhost:3005/Hobby?hobby=Crafts,
-    If you want your favourite hobby to be Swimming => curl http://localhost:3005/Hobby?hobby=Swimming
-     `;
+const startGame = () => {
+    return `<p>Welcome to the game of life. Please enter your name </p>
+    <input id="name" />
+    <a id="link"><button>Go</button></a>
+    <script>
+    let nameInput = document.getElementById('name')
+        nameInput.addEventListener('keyup', (e)=>{
+            let link = document.getElementById('link')
+            link.setAttribute('href', 'http://localhost:3005/api/Name?name='+e.target.value)
+        })
+    </script>`;
+};
+
+const createGameState = async (name) => {
+    let newGameState = await createGame ({ name: name,
+    risk: 0,
+    inactivity: 0,
+    hobby: "",
+    subject: false,
+    kids: false,
+    job: false,
+    midLifeCrisis: false,
+    retire: false,  });
+    let newGameId = newGameState._id;
+    let game = await findGameById(newGameId);
+    gameState = game;
+    let message = `<p>Welcome to the game of life ${name}! Do you want your hobby to be <a href=http://localhost:3005/api/Hobby?hobby=Bike>Biking</a>, 
+    <a href=http://localhost:3005/api/Hobby?hobby=Swim>Swimming</a> or <a href=http://localhost:3005/api/Hobby?hobby=Crafts>Crafts</a>?</p>
+    `;
      return message;
 };
 
@@ -47,16 +77,24 @@ const chooseHobby = (hobby) => {
     let message;
     if (hobby === 'Bike') {
         gameState.hobby = 'biking';
-        message = gameState.name + `'s favourite hobby is biking. Do you wear pads when you bike? If yes: http://localhost:3005/Pads?pads=yes
-        If no : http://localhost:3005/Pads?pads=no`
+        message = `<p>${gameState.name}'s favourite hobby is biking. How do you feel about wearing pads while you bike? <br>
+        <a href=http://localhost:3005/api/Pads?pads=yes>Safety first!</a> <br>
+        <a href=http://localhost:3005/api/Pads?pads=no>I don't need no protection!</a>
+        </p>`
     }
     if (hobby === 'Swim') {
         gameState.hobby = 'swimming';
-        message = gameState.name + `'s favourite hobby is swimming.`
+        message = `<p>${gameState.name}'s favourite hobby is swimming. What's your favourite subject in school?<br>
+        <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> </p>`
     }
     if (hobby === 'Crafts') {
         gameState.hobby = 'crafts';
-        message = gameState.name + `'s favourite hobby is crafts`
+        message = `<p>${gameState.name}'s favourite hobby is crafts.  What's your favourite subject in school?<br>
+        <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> </p>`
     }
     updateGameById(gameState._id, gameState)
     return message;
@@ -68,20 +106,21 @@ const choosePads = (pads) => {
         gameState.risky = 1;
         addRandomRisk();
         if (gameState.risky >= 1.9) {
-            message = gameState.name + ` chose not to wear protective gear and got in a terrible biking accident
-            and died. Better luck in the next life. To play again http://localhost:3005/start`
+            message = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
+            and died. Better luck in the next life. <br>
+            <a href=http://localhost:3005/api/start>Please play again!</a></p>`
         } else {
-        message = gameState.name + ` is a bad ass and doesn't wear pads while biking. What's your favourite subject 
-        in school? for gym: http://localhost:3005/Subject?subject=Gym
-        for math: http://localhost:3005/Subject?subject=Math
-        if you just want to drop out: http://localhost:3005/Subject?subject=dropOut 
+        message = `<p>${gameState.name} is a bad ass and doesn't wear pads while biking. What's your favourite subject in school?<br>
+        <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> </p> 
         `
         };
     } else {
-        message = gameState.name + ` loves safety and sports!. What's your favourite subject 
-        in school? for gym: http://localhost:3005/Subject?subject=Gym
-        for math: http://localhost:3005/Subject?subject=Math
-        if you just want to drop out: http://localhost:3005/Subject?subject=dropOut 
+        message = `<p>${gameState.name} loves safety and sports!. What's your favourite subject in school?<br>
+        <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
+        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a></p> 
         `
         };
     updateGameById(gameState._id, gameState)
@@ -90,30 +129,37 @@ const choosePads = (pads) => {
 
     const chooseSubject = (subject) => {
         let message;
+        addRandomRisk();
+        if (gameState.risky >= 1.9) {
+            message = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
+            and died. Better luck in the next life. <br>
+            <a href=http://localhost:3005/api/start>Please play again!</a></p>`
+        }
         if (subject = 'dropOut') {
             gameState.subject = 'dropOut';
-            message = `School just wasn't for ${gameState.name}. What's your plan? 
-            If you want to be a rockstar: http://localhost:3005/youngAdult?youngAdult=rockstar
-            If you want to have kids: http://localhost:3005/youngAdult?youngAdult=kids
-            If you want to get a jerb: http://localhost:3005/youngAdult?youngAdult=job `
-        };
-        if (subject = 'Gym') {
+            message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
+            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=rockstar>I'm going to be a rockstar</a>
+            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=kids>Time to have kids!</a>
+            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I need a jerb</a> `
+        }   else if (subject = 'Gym') {
             gameState.subject = 'Gym';
-            message = `${gameState.name} Finished high school. What's your plan? 
-            If you want to go to college: http://localhost:3005/youngAdult?youngAdult=college
-            If you want to get a job: http://localhost:3005/youngAdult?youngAdult=job `
-        };
-        if (subject = 'Math') {
+            message = `<p>${gameState.name} Finished high school. What's your plan? <p>
+            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=college>Time to go to College</a>
+            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I'm going to get a job</a> `
+        }   else if (subject = 'Math') {
             gameState.subject = 'Math';
             message = `${gameState.name} Finished high school. What's your plan? 
-            If you want to go to college: http://localhost:3005/youngAdult?youngAdult=college
-            If you want to get a job: http://localhost:3005/youngAdult?youngAdult=job `
+            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=college>Time to go to College</a>
+            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I'm going to get a job</a> `
         };
+    updateGameById(gameState._id, gameState);
+    return message;
     }
+
 
     module.exports= { 
         startGame,
-        createdGameState,
+        createGameState,
         gameState, 
         youLazy, 
         addRandomRisk, 
