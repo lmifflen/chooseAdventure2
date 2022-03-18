@@ -141,18 +141,18 @@ const choosePads = (pads) => {
             gameState.subject = 'dropOut';
             message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
             <br><a href=http://localhost:3005/api/youngAdult?youngAdult=rockstar>I'm going to be a rockstar</a>
-            <br><a href=http://localhost:3005/api/youngAdult?kids=kids>Time to have kids!</a>
-            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I need a jerb</a> `
+            <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+            <br><a href=http://localhost:3005/api/Job?job=job>I need a jerb</a> `
         }   else if (subject === 'Gym') {
             gameState.subject = 'Gym';
             message = `<p>${gameState.name} Finished high school. What's your plan? <p>
             <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
-            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I'm going to get a job</a> `
+            <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `
         }   else if (subject = 'Math') {
             gameState.subject === 'Math';
             message = `${gameState.name} Finished high school. What's your plan? 
             <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
-            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I'm going to get a job</a> `
+            <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `
         };
     updateGameById(gameState._id, gameState);
     return message;
@@ -164,8 +164,8 @@ const choosePads = (pads) => {
             if (college) {
             gameState.college = true;
             message = `<p>${gameState.name} finished college. What's your plan now? <p>
-            <br><a href=http://localhost:3005/api/youngAdult?kids=kids>Time to have kids!</a>
-            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I need a job to pay off these damn student loans</a> `
+            <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+            <br><a href=http://localhost:3005/api/Job?job=job>I need a job to pay off these damn student loans</a> `
             };
     updateGameById(gameState._id, gameState);
     return message;
@@ -180,6 +180,19 @@ const choosePads = (pads) => {
         <br><a href=http:localhost:3005/api/adult?drunk=drunk>Wine o'clock is my hobby.</a></br>
         <br><a href=http:localhost:3005/api/adult?yes=yes>Of course. Balance is important.</a></br>
         <br><a href=http:localhost:3005/api/adult?no=no>Nope.</a></br>`
+        };
+    updateGameById(gameState._id, gameState);
+    return message;
+    }
+
+    const getJob = (job) => {
+        let message;
+        addRandomRisk();
+        if (job) {
+        gameState.job = true;
+        message = `<p>You managed to land a job. Life's good. What now?</p>
+        <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+        <br><a href=http://localhost:3005/api/Dink?dink=dink>Imma do me.</a>`
         };
     updateGameById(gameState._id, gameState);
     return message;
@@ -201,4 +214,5 @@ const choosePads = (pads) => {
         chooseSubject,
         chooseCollege,
         haveKids,
+        getJob,
     };
