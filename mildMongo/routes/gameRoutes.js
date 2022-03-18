@@ -9,7 +9,8 @@ const {
         endGame,             
         chooseHobby,
         choosePads,
-        chooseSubject
+        chooseSubject,
+        chooseCollege, 
     } = require("../model/game");
 
 router.get('/start', (req, res) => {
@@ -40,5 +41,11 @@ router.get('/start', (req, res) => {
      let subject = req.query.subject;
      let choice = chooseSubject(subject);
      res.send(choice);
- })
+ });
+
+ router.get("/College", async (req, res) => {
+     let college = req.query.college;
+     let choice = chooseCollege(college);
+     res.send(choice);
+ });
  module.exports = router;
