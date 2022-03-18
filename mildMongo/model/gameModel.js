@@ -31,6 +31,9 @@ const gameSchema = new mongoose.Schema({
     job: {
         type: Boolean,
     },
+    dink: {
+        type: Boolean,
+    },
     midLifeCrisis: {
         type: String,
     },

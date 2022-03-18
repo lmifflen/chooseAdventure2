@@ -14,6 +14,7 @@ const {
         haveKids,
         getJob,
         rockStar,
+        dinkCrisis,
     } = require("../model/game");
 
 router.get('/start', (req, res) => {
@@ -63,6 +64,11 @@ router.get("/Job", async (req, res) => {
 router.get("/Rockstar", async (req, res) => {
     let rockstar = req.query.rockstar;
     let choice = rockStar(rockstar);
+    res.send(choice);
+});
+router.get("/Dink", async (req, res) => {
+    let dink = req.query.dink;
+    let choice = dinkCrisis(dink);
     res.send(choice);
 });
  module.exports = router;

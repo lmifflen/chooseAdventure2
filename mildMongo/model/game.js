@@ -40,6 +40,7 @@ let gameState = {
     college: false,
     kids: false,
     job: false,
+    dink: false,
     midLifeCrisis: false,
     retire: false,
 };
@@ -72,6 +73,7 @@ const createGameState = async (name) => {
     kids: false,
     job: false,
     rockstar: false,
+    dink: false,
     midLifeCrisis: false,
     retire: false,  });
     let newGameId = newGameState._id;
@@ -211,6 +213,22 @@ const choosePads = (pads) => {
     return message;
     }
 
+    const dinkCrisis = (dink) => {
+        let message;
+        addRandomRisk();
+        if (dink) {
+            gameState.dink = true;
+            message = `<p>You've been working now for 20 years. You're starting to feel empty on the inside. 
+                Something is missing. This must be the mid life crisis. What will you do?
+            <br><a href=http://localhost:3005/api/DinkCrisis?wineo=wineo>Let me show you my wine cellar</br>
+            <br><a href=http://localhost:3005/api/DinkCrisis?jacked=jacked>Time to start lifting weights and get a tattoo</br>
+            <br><a href=http://localhost:3005/api/DinkCrisis?yachty=yachty>I think I'll get a yacht like Jeffery</br>
+            </p>`
+        };
+        updateGameById(gameState._id, gameState);
+        return message;
+    }
+
 
 
 
@@ -228,4 +246,5 @@ const choosePads = (pads) => {
         haveKids,
         getJob,
         rockStar,
+        dinkCrisis,
     };
