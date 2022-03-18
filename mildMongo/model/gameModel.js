@@ -22,6 +22,9 @@ const gameSchema = new mongoose.Schema({
     college: {
         type: Boolean,
     },
+    rockstar: {
+        type: Boolean,
+    },
     kids: {
         type: Boolean,
     },

@@ -64,13 +64,14 @@ const startGame = () => {
 
 const createGameState = async (name) => {
     let newGameState = await createGame ({ name: name,
-    risk: 0,
+    risky: 0,
     inactivity: 0,
     hobby: "",
     subject: "",
-    college: "",
+    college: false,
     kids: false,
     job: false,
+    rockstar: false,
     midLifeCrisis: false,
     retire: false,  });
     let newGameId = newGameState._id;
@@ -140,7 +141,7 @@ const choosePads = (pads) => {
             if (subject === 'dropOut') {
             gameState.subject = 'dropOut';
             message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
-            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=rockstar>I'm going to be a rockstar</a>
+            <br><a href=http://localhost:3005/api/Rockstar?rockstar=rockstar>I'm going to be a rockstar</a>
             <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I need a jerb</a> `
         }   else if (subject === 'Gym') {
@@ -197,7 +198,18 @@ const choosePads = (pads) => {
     updateGameById(gameState._id, gameState);
     return message;
     }
-
+    const rockStar = (rockstar) => {
+        let message;
+        addRandomRisk();
+        if (rockstar) {
+        gameState.rockstar = true;
+        message = `<p>You're a struggling musician. That's the life you chose. What now?</p>
+        <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+        <br><a href=http://localhost:3005/api/Dink?dink=dink>Imma do me.</a>`
+        };
+    updateGameById(gameState._id, gameState);
+    return message;
+    }
 
 
 
@@ -215,4 +227,5 @@ const choosePads = (pads) => {
         chooseCollege,
         haveKids,
         getJob,
+        rockStar,
     };
