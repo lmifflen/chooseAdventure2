@@ -141,7 +141,7 @@ const choosePads = (pads) => {
             gameState.subject = 'dropOut';
             message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
             <br><a href=http://localhost:3005/api/youngAdult?youngAdult=rockstar>I'm going to be a rockstar</a>
-            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=kids>Time to have kids!</a>
+            <br><a href=http://localhost:3005/api/youngAdult?kids=kids>Time to have kids!</a>
             <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I need a jerb</a> `
         }   else if (subject === 'Gym') {
             gameState.subject = 'Gym';
@@ -164,12 +164,29 @@ const choosePads = (pads) => {
             if (college) {
             gameState.college = true;
             message = `<p>${gameState.name} finished college. What's your plan now? <p>
-            <br><a href=http://localhost:3005/api/youngAdult?youngAdult=kids>Time to have kids!</a>
+            <br><a href=http://localhost:3005/api/youngAdult?kids=kids>Time to have kids!</a>
             <br><a href=http://localhost:3005/api/youngAdult?youngAdult=job>I need a job to pay off these damn student loans</a> `
             };
     updateGameById(gameState._id, gameState);
     return message;
     }
+
+    const haveKids = (kids) => {
+        let message;
+        addRandomRisk();
+        if (kids) {
+        gameState.kids = true;
+        message = `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
+        <br><a href=http:localhost:3005/api/adult?drunk=drunk>Wine o'clock is my hobby.</a></br>
+        <br><a href=http:localhost:3005/api/adult?yes=yes>Of course. Balance is important.</a></br>
+        <br><a href=http:localhost:3005/api/adult?no=no>Nope.</a></br>`
+        };
+    updateGameById(gameState._id, gameState);
+    return message;
+    }
+
+
+
 
 
     module.exports= { 
@@ -183,4 +200,5 @@ const choosePads = (pads) => {
         choosePads,
         chooseSubject,
         chooseCollege,
+        haveKids,
     };
