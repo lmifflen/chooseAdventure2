@@ -15,6 +15,9 @@ const {
         getJob,
         rockStar,
         dinkCrisis,
+        nuclearFamCrisis,
+        midLifeCrisis,
+        retirementOption,
     } = require("../model/game");
 
 router.get('/start', (req, res) => {
@@ -71,4 +74,16 @@ router.get("/Dink", async (req, res) => {
     let choice = dinkCrisis(dink);
     res.send(choice);
 });
+router.get("/Crisis", async (req, res) => {
+    let crisis = req.query.crisis;
+    let choice = midLifeCrisis(crisis);
+    res.send(choice);
+});
+router.get("/Retire", async (req, res) => {
+    let retire = req.query.retire;
+    let midlife = req.query.midlife;
+    let choice = retirementOption(retire, midlife);
+    res.send(choice);
+});
+
  module.exports = router;

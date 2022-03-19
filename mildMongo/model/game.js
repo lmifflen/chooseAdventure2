@@ -31,6 +31,20 @@ const { deleteGameById,
             updateGameById(gameState._id, gameState);            
         }
     }
+
+    function wineRandomRisk(deathByWine) {
+        if (gameState.wineo === true) {
+            deathByWine = 1 * Math.random();
+            if (deathByWine >= 1.9) {
+                message = `<p> ${gameState.name} partook in the wine a bit too much. Not sure if it's the fatty liver 
+                or drunk driving the killed them but it certainly was the excessive drinking. <br>
+                <a href=http://localhost:3005/api/start>Please play again!</a></p>`
+            }
+            return message;
+            updateGameById(gameState._id, gameState);            
+        }
+    }
+
 let gameState = {
     name: "",
     risk: 0,
@@ -75,7 +89,12 @@ const createGameState = async (name) => {
     rockstar: false,
     dink: false,
     midLifeCrisis: false,
-    retire: false,  });
+    nucFam: false,
+    homemaker: false,
+    retire: false,
+    message: "",
+    midlife: "",
+    wineo: false,  });
     let newGameId = newGameState._id;
     let game = await findGameById(newGameId);
     gameState = game;
@@ -180,9 +199,9 @@ const choosePads = (pads) => {
         if (kids) {
         gameState.kids = true;
         message = `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
-        <br><a href=http:localhost:3005/api/adult?drunk=drunk>Wine o'clock is my hobby.</a></br>
-        <br><a href=http:localhost:3005/api/adult?yes=yes>Of course. Balance is important.</a></br>
-        <br><a href=http:localhost:3005/api/adult?no=no>Nope.</a></br>`
+        <br><a href=http://localhost:3005/api/adult?drunk=drunk>Wine o'clock is my hobby.</a>
+        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Of course. Balance is important.</a>
+        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Nope.</a>`
         };
     updateGameById(gameState._id, gameState);
     return message;
@@ -195,7 +214,7 @@ const choosePads = (pads) => {
         gameState.job = true;
         message = `<p>You managed to land a job. Life's good. What now?</p>
         <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
-        <br><a href=http://localhost:3005/api/Dink?dink=dink>Imma do me.</a>`
+        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`
         };
     updateGameById(gameState._id, gameState);
     return message;
@@ -207,27 +226,77 @@ const choosePads = (pads) => {
         gameState.rockstar = true;
         message = `<p>You're a struggling musician. That's the life you chose. What now?</p>
         <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
-        <br><a href=http://localhost:3005/api/Dink?dink=dink>Imma do me.</a>`
+        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`
         };
     updateGameById(gameState._id, gameState);
     return message;
     }
 
     const dinkCrisis = (dink) => {
-        let message;
         addRandomRisk();
-        if (dink) {
+        if (gameState.job === true && gameState.kids === false) {
             gameState.dink = true;
-            message = `<p>You've been working now for 20 years. You're starting to feel empty on the inside. 
+            gameState.message = `<p>You've been working now for 20 years. You're starting to feel empty on the inside. 
                 Something is missing. This must be the mid life crisis. What will you do?
-            <br><a href=http://localhost:3005/api/DinkCrisis?wineo=wineo>Let me show you my wine cellar</br>
-            <br><a href=http://localhost:3005/api/DinkCrisis?jacked=jacked>Time to start lifting weights and get a tattoo</br>
-            <br><a href=http://localhost:3005/api/DinkCrisis?yachty=yachty>I think I'll get a yacht like Jeffery</br>
+            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=wineo>Let me show you my wine cellar</br></a>
+            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=jacked>Time to start lifting weights and get a tattoo</br></a>
+            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=yachty>I think I'll get a yacht like Jeffery</br></a>
             </p>`
         };
         updateGameById(gameState._id, gameState);
-        return message;
     }
+    const homeMakerCrisis = (homemaker) => {
+        addRandomRisk();
+        if (gameState.kids === true && gameState.job === false) {
+            gameState.homemaker = true;
+            gameState.message = `<p>Your kids are all grown up now and you dont have a job. 
+            Time to exlpore who you are. What will you do?
+            <br><a href=http://localhost:3005/api/Retire?retire=false&midlife=wineo>Wine o'clock is my hobby.</br></a>
+            <br><a href=http://localhost:3005/api/Home?job=job>I think I'll get a job.</br></a>
+            <br><a href=http://localhost:3005/api/Home?school=school>I think i'll go back to school.</br></a>
+            </p>`
+        }
+        updateGameById(gameState._id, gameState);
+        }
+
+     const nuclearFamCrisis = (nucFam) => {
+        addRandomRisk();
+        if (gameState.kids === true && gameState.job === true) {
+            gameState.nucFam = true;
+            gameState.message = `<p>You've succesfully raised your children! Now you have time and money to explore the real you. 
+            What will you do?
+            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=wineo>Wine o'clock is my hobby.</br></a>
+            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=yogi>I think I'll become a yoga instructor.</br></a>
+            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=car>I think I'll get a yellow convertible</br></a>
+            </p>`
+        };
+        updateGameById(gameState._id, gameState);
+        }
+
+    const midLifeCrisis = (crisis) => {
+        addRandomRisk();
+        homeMakerCrisis();
+        nuclearFamCrisis();
+        dinkCrisis();
+        return gameState.message;
+        };
+        
+    const retirementOption = (retire, midlife) => {
+        gameState.midlife = midlife;
+        gameState.retire = retire;
+        if (gameState.midlife === 'wineo') {
+            gameState.wineo = true
+        };
+        console.log(midlife);
+        if (gameState.retire === false) {
+            gameState.message = `<p> you have no job. time to die.</p>`
+        } else {
+            gameState.message = `<p> Do you want to retire now? </p>`
+        }
+        updateGameById(gameState._id, gameState);
+        return gameState.message;
+    }
+    
 
 
 
@@ -247,4 +316,7 @@ const choosePads = (pads) => {
         getJob,
         rockStar,
         dinkCrisis,
+        nuclearFamCrisis,
+        midLifeCrisis,
+        retirementOption,
     };

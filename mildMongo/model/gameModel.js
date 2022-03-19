@@ -34,10 +34,25 @@ const gameSchema = new mongoose.Schema({
     dink: {
         type: Boolean,
     },
+    nucFam: {
+        type: Boolean,
+    },
+    homemaker: {
+        type:Boolean,
+    },
     midLifeCrisis: {
-        type: String,
+        type: Boolean,
     },
     retire: {
+        type: Boolean,
+    },
+    message: {
+        type: String,
+    },
+    midlife: {
+        type: String,
+    },
+    wineo: {
         type: Boolean,
     },
 });
