@@ -1,7 +1,7 @@
 const { updateGameById } = require("./gameModel");
 
 function endGame() {
-    if (gameState.risky >= 1.9 || gameState.inactivity >= 1.9 || gameState.wineo >=1.9) {
+    if (gameState.risky >= 1.9 || gameState.inactivity >= 1.9 || gameState.wineo >=1.9 || gameState.nukes > 1.98) {
         gameState.gameOver = true;
     }
 }
@@ -42,15 +42,20 @@ function wineRandomRisk() {
     }
 }
 
+const endAge = () => {
+    gameState.age = 60 + Math.floor(60 * Math.random());
+}
+
 const nuclearWar = () => {
-    let nukes = 1 + 1 * Math.random();
-    if (nukes >= 1.98) {
+    gameState.nukes = 1 + 1 * Math.random();
+    if (gameState.nukes >= 1.98) {
+
         gameState.death = `<p> Unfortunatly the descisions ${gameState.name} made in life do not matter.
-        They were born in the worng timeline. Nuclear war has broke out and they slowly startved to death in 
+        They were born in the wrong timeline. Nuclear war has broke out and they slowly starved to death in 
         the post apocalyptic nuclear winter. <br>
         <a href=http://localhost:3005/api/start>Please play again!</a></p>`
     }
-    console.log(nukes)
+    console.log(gameState.nukes)
 }
 
 // function hobbyUpdate() {
@@ -73,6 +78,7 @@ const deathRoll = () => {
     wineRandomRisk();
     nuclearWar();
     endGame();
+    endAge();
     updateGameById(gameState._id, gameState); 
 }
 module.exports = {

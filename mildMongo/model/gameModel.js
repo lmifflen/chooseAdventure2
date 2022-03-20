@@ -60,7 +60,19 @@ const gameSchema = new mongoose.Schema({
     },
     gameOver: {
         type: Boolean,
-    }
+    },
+    hobbyUpdate: {
+        type: String,
+    },
+    nukes: {
+        type: Number,
+    }, 
+    endAge: {
+        type: Number,
+    },
+    ending: {
+        type: String,
+    },
 
     });
 

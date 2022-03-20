@@ -99,7 +99,12 @@ const createGameState = async (name) => {
     midlife: "",
     wineo: 0,
     death: "",
-    gameOver: false,  });
+    hobbyUpdate: "",
+    gameOver: false,
+    nukes: 1,
+    endAge: 60,
+    ending: ""
+  });
     let newGameId = newGameState._id;
     let game = await findGameById(newGameId);
     gameState = game;
@@ -192,56 +197,59 @@ const choosePads = (pads) => {
             gameState.message = gameState.death
         } else if (college) {
             gameState.college = true;
-            message = `<p>${gameState.name} finished college. What's your plan now? <p>
+            gameState.message = `<p>${gameState.name} finished college. What's your plan now? <p>
             <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I need a job to pay off these damn student loans</a> `
             };
     updateGameById(gameState._id, gameState);
-    return message;
+    return gameState.message;
     }
 
     const haveKids = (kids) => {
-        let message;
-        addRandomRisk();
-        if (kids) {
+        deathRoll();
+        if (gameState.gameOver) {
+            gameState.message = gameState.death
+        } else if (kids) {
         gameState.kids = true;
-        message = `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
+        gameState.message = `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby=wineo>Wine o'clock is my hobby.</a>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Of course. Balance is important.</a>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby="">Nope.</a>`
         };
     updateGameById(gameState._id, gameState);
-    return message;
+    return gameState.message;
     }
 
     const getJob = (job) => {
-        let message;
-        addRandomRisk();
-        if (job) {
+        deathRoll();
+        if (gameState.gameOver) {
+            gameState.message = gameState.death
+        } else if (job) {
         gameState.job = true;
-        message = `<p>You managed to land a job. Life's good. What now?</p>
+        gameState.message = `<p>You managed to land a job. Life's good. What now?</p>
         <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`
         };
     updateGameById(gameState._id, gameState);
-    return message;
+    return gameState.message;
     }
     const rockStar = (rockstar) => {
-        let message;
-        addRandomRisk();
-        if (rockstar) {
+        deathRoll();
+        if (gameState.gameOver) {
+            gameState.message = gameState.death
+        } else if (rockstar) {
         gameState.rockstar = true;
-        message = `<p>You're a struggling musician. That's the life you chose. What now?</p>
+        gameState.wineo = 1;
+        gameState.message = `<p>You're a struggling musician. That's the life you chose. What now?</p>
         <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`
         };
     updateGameById(gameState._id, gameState);
-    return message;
+    return gameState.message;
     }
 
     const dinkCrisis = (dink) => {
-        addRandomRisk();
-        if (gameState.job === true && gameState.kids === false) {
+            if (gameState.job === true && gameState.kids === false) {
             gameState.dink = true;
             gameState.message = `<p>You've been working now for 20 years. You're starting to feel empty on the inside. 
                 Something is missing. This must be the mid life crisis. What will you do?
@@ -253,14 +261,12 @@ const choosePads = (pads) => {
         updateGameById(gameState._id, gameState);
     }
     const homeMakerCrisis = (homemaker) => {
-        addRandomRisk();
-        if (gameState.kids === true && gameState.job === false) {
+            if (gameState.kids === true && gameState.job === false) {
             gameState.homemaker = true;
             gameState.message = `<p>Your kids are all grown up now and you dont have a job. 
             Time to exlpore who you are. What will you do?
-            <br><a href=http://localhost:3005/api/Retire?retire=false&midlife=wineo>Wine o'clock is my hobby.</br></a>
-            <br><a href=http://localhost:3005/api/Home?job=job>I think I'll get a job.</br></a>
-            <br><a href=http://localhost:3005/api/Home?school=school>I think i'll go back to school.</br></a>
+            <br><a href=http://localhost:3005/api/Ending?ending=no>Wine o'clock is my hobby.</br></a>
+            <br><a href=http://localhost:3005/api/Retire?retire=true>I think I'll get a job.</br></a>
             </p>`
         }
         updateGameById(gameState._id, gameState);
@@ -268,8 +274,7 @@ const choosePads = (pads) => {
 
      const nuclearFamCrisis = (nucFam) => {
         
-        addRandomRisk();
-        if (gameState.kids === true && gameState.job === true) {
+            if (gameState.kids === true && gameState.job === true) {
             gameState.nucFam = true;
             gameState.message = `<p>You've succesfully raised your children! Now you have time and money to explore the real you. 
             What will you do?
@@ -282,18 +287,21 @@ const choosePads = (pads) => {
         }
 
     const midLifeCrisis = (crisis, hobby) => {
-    //     gameState.hobbyUpdate = hobby
-    //     if (gameState.hobbyUpdate = "wineo") {
-    //         gameState.wineo = 1
-    //         wineRandomRisk();
-    //    } else if (gameState.hobbyUpdate = "") {
-    //        gameState.hobby = ""
-    //    }
-        addRandomRisk();
+        gameState.hobbyUpdate = hobby
+        if (gameState.hobbyUpdate === "wineo") {
+            gameState.wineo = 1
+       } else if (gameState.hobbyUpdate === "") {
+           gameState.inactivity = 1
+       }
+        deathRoll();
+        if (gameState.gameOver) {
+            gameState.message = gameState.death
+        } else{
         homeMakerCrisis();
         nuclearFamCrisis();
         dinkCrisis();
         return gameState.message;
+        }
         };
         
     const retirementOption = (retire, midlife) => {
@@ -301,19 +309,43 @@ const choosePads = (pads) => {
         gameState.retire = retire;
         if (gameState.midlife === 'wineo') {
             gameState.wineo = 1
-            wineRandomRisk();
-        }
-        console.log(midlife);
-        if (gameState.retire === false && gameState.wineo < 1.9) {
-            gameState.message = `<p> you have no job. time to die.</p>`
-        } else if (gameState.retire == true && gameState.wineo < 1.9){
-            gameState.message = `<p> Do you want to retire now? </p>`
+            }
+        deathRoll();
+        if (gameState.gameOver) {
+            gameState.message = gameState.death
+        } else if (gameState.retire){
+            gameState.message = `<p> Do you want to retire now? </p>
+            <a href=http://localhost:3005/api/Ending?ending=retire>Yes</br></a>
+            <a href=http://localhost:3005/api/Ending?ending=no>No</br></a>`
         }
         updateGameById(gameState._id, gameState);
         console.log(gameState.message)
         return gameState.message;
     }
     
+    const thisMustBeTheEnd = (ending) => {
+        gameState.ending = ending;
+        deathRoll();
+        if (gameState.gameOver) {
+            gameState.message = gameState.death
+        } else if (gameState.ending === 'retire' && gameState.hobby === ""){
+            gameState.message = `<p> ${gameState.name} lived a boring life without any hobbies. They retired and then died
+            6 months later because they had no purpose left in life.</p>`
+        } else if (gameState.ending === 'no' && gameState.hobby === "") {
+            gameState.message = `<p> ${gameState.name} was found dead in the office at the age of ${gameState.age}. </p>`
+        } else if ( gameState.ending === 'retire' && gameState.hobby !== "") {
+            gameState.message = `<p> ${gameState.name} enjoyed spending time with their family and doing their hobby ${gameState.hobby}
+            They lived a full life eventually passing away at ${gameState.age}. </p>`
+        } else if ( gameState.ending === 'no' && gameState.hobby !== "") {
+            gameState.message = `<p> ${gameState.name} kept their energy until late in life continuing to work, spend time with family and doing
+            their hobby, ${gameState.hobby} ,They eventually passing away at ${gameState.age}. </p>`
+        }
+        updateGameById(gameState._id, gameState);
+        console.log(gameState.message)
+        return gameState.message;
+    }
+    
+
 
 
 
@@ -335,4 +367,5 @@ const choosePads = (pads) => {
         nuclearFamCrisis,
         midLifeCrisis,
         retirementOption,
+        thisMustBeTheEnd,
     };

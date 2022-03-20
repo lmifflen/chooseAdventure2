@@ -18,6 +18,7 @@ const {
         nuclearFamCrisis,
         midLifeCrisis,
         retirementOption,
+        thisMustBeTheEnd,
     } = require("../model/game");
 
 router.get('/start', (req, res) => {
@@ -84,6 +85,11 @@ router.get("/Retire", async (req, res) => {
     let retire = req.query.retire;
     let midlife = req.query.midlife;
     let choice = retirementOption(retire, midlife);
+    res.send(choice);
+});
+router.get("/Ending", async (req, res) => {
+    let ending = req.query.ending;
+    let choice = thisMustBeTheEnd(ending);
     res.send(choice);
 });
 
