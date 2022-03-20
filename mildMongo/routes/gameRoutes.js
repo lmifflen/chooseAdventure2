@@ -4,9 +4,9 @@ const router = express.Router();
 const { 
         startGame,
         createGameState,
-        youLazy, 
-        addRandomRisk, 
-        endGame,             
+        // youLazy, 
+        // addRandomRisk, 
+        // endGame,             
         chooseHobby,
         choosePads,
         chooseSubject,
