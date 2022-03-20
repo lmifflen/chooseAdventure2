@@ -239,12 +239,14 @@ const choosePads = (pads) => {
             gameState.message = gameState.death
         } else if (rockstar) {
         gameState.rockstar = true;
+        gameState.job = true;
         gameState.wineo = 1;
         gameState.message = `<p>You're a struggling musician. That's the life you chose. What now?</p>
         <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`
         };
     updateGameById(gameState._id, gameState);
+    console.log(gameState.message)
     return gameState.message;
     }
 
@@ -338,7 +340,7 @@ const choosePads = (pads) => {
             They lived a full life eventually passing away at ${gameState.age}. </p>`
         } else if ( gameState.ending === 'no' && gameState.hobby !== "") {
             gameState.message = `<p> ${gameState.name} kept their energy until late in life continuing to work, spend time with family and doing
-            their hobby, ${gameState.hobby} ,They eventually passing away at ${gameState.age}. </p>`
+            their hobby, ${gameState.hobby}. They eventually passing away at ${gameState.age}. </p>`
         }
         updateGameById(gameState._id, gameState);
         console.log(gameState.message)
