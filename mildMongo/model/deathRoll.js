@@ -42,6 +42,17 @@ function wineRandomRisk() {
     }
 }
 
+const nuclearWar = () => {
+    let nukes = 1 + 1 * Math.random();
+    if (nukes >= 1.98) {
+        gameState.death = `<p> Unfortunatly the descisions ${gameState.name} made in life do not matter.
+        They were born in the worng timeline. Nuclear war has broke out and they slowly startved to death in 
+        the post apocalyptic nuclear winter. <br>
+        <a href=http://localhost:3005/api/start>Please play again!</a></p>`
+    }
+    console.log(nukes)
+}
+
 // function hobbyUpdate() {
 //     if (gameState.hobbyUpdate) {
 //     gameState.hobbyUpdate = hobby
@@ -60,6 +71,7 @@ const deathRoll = () => {
     addRandomRisk();
     youLazy();
     wineRandomRisk();
+    nuclearWar();
     endGame();
     updateGameById(gameState._id, gameState); 
 }
