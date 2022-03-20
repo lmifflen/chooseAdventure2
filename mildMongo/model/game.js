@@ -3,61 +3,64 @@ const { deleteGameById,
     findAllGames,
     findGameById,
     updateGameById } = require("./gameModel");
+const { deathRoll } = require("./deathRoll");
 
-    function endGame() {
-        if (gameState.risky >= 1.9) {
-            gameState.gameOver = true;
-        } else if (gameState.inactivity >= 1.9 ) {
-            gameState.gameOver = true;
-        }
-    }
+    // function endGame() {
+    //     if (gameState.risky >= 1.9) {
+    //         gameState.gameOver = true;
+    //     } else if (gameState.inactivity >= 1.9 ) {
+    //         gameState.gameOver = true;
+    //     }
+    // }
     
-    function youLazy() {
-        if (gameState.inactivity >= 1) {
-            gameState.inactivity += 1*Math.random();
-        }
-    }
+    // function youLazy() {
+    //     if (gameState.inactivity >= 1) {
+    //         gameState.inactivity += 1*Math.random();
+    //     }
+    // }
     
     
-    function addRandomRisk() {
-        if (gameState.risky >= 1) {
-            gameState.risky += 1 * Math.random();
-            if (gameState.risky >= 1.9) {
-                message = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
-                and died. Better luck in the next life. <br>
-                <a href=http://localhost:3005/api/start>Please play again!</a></p>`
-            }
-            return message;
-            updateGameById(gameState._id, gameState);            
-        }
-    }
+    // function addRandomRisk() {
+    //     if (gameState.risky >= 1) {
+    //         gameState.risky += 1 * Math.random();
+    //         if (gameState.risky >= 1.9) {
+    //             message = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
+    //             and died. Better luck in the next life. <br>
+    //             <a href=http://localhost:3005/api/start>Please play again!</a></p>`
+    //         }
+    //         return message;
+    //         updateGameById(gameState._id, gameState);            
+    //     }
+    // }
 
-    function wineRandomRisk(deathByWine) {
-        if (gameState.wineo === true) {
-            deathByWine = 1 * Math.random();
-            if (deathByWine >= 1.9) {
-                message = `<p> ${gameState.name} partook in the wine a bit too much. Not sure if it's the fatty liver 
-                or drunk driving the killed them but it certainly was the excessive drinking. <br>
-                <a href=http://localhost:3005/api/start>Please play again!</a></p>`
-            }
-            return message;
-            updateGameById(gameState._id, gameState);            
-        }
-    }
+    // function wineRandomRisk() {
+    //     if (gameState.wineo >= 1) {
+    //         gameState.wineo += 1 * Math.random();
+    //         if (gameState.wineo >= 1.9) {
+    //             gameState.message = `<p> ${gameState.name} partook in the wine a bit too much. Not sure if it's the fatty liver 
+    //             or drunk driving the killed them but it certainly was the excessive drinking. <br>
+    //             <a href=http://localhost:3005/api/start>Please play again!</a></p>`
+    //         }
+    //         console.log(gameState.wineo);
+    //         return gameState.message;
+    //         updateGameById(gameState._id, gameState);            
+    //     }
+    // }
 
-let gameState = {
-    name: "",
-    risk: 0,
-    inactivity: 0,
-    hobby: "",
-    subject: "",
-    college: false,
-    kids: false,
-    job: false,
-    dink: false,
-    midLifeCrisis: false,
-    retire: false,
-};
+// let gameState = {
+//     name: "",
+//     risk: 0,
+//     inactivity: 0,
+//     hobby: "",
+//     subject: "",
+//     college: false,
+//     kids: false,
+//     job: false,
+//     dink: false,
+//     midLifeCrisis: false,
+//     retire: false,
+//     wineo: 0,
+// };
 
 // const startGame = () => {
 //     return `Welcome to the game of life. Please enter your name 
@@ -94,7 +97,9 @@ const createGameState = async (name) => {
     retire: false,
     message: "",
     midlife: "",
-    wineo: false,  });
+    wineo: 0,
+    death: "",
+    gameOver: false,  });
     let newGameId = newGameState._id;
     let game = await findGameById(newGameId);
     gameState = game;
@@ -135,7 +140,7 @@ const choosePads = (pads) => {
     let message;
     if (pads === 'no') {
         gameState.risky = 1;
-        addRandomRisk();
+        // addRandomRisk();
         // if (gameState.risky >= 1.9) {
         //     message = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
         //     and died. Better luck in the next life. <br>
@@ -157,27 +162,28 @@ const choosePads = (pads) => {
     }
 
     const chooseSubject = (subject) => {
-        let message;
-        addRandomRisk();
-            if (subject === 'dropOut') {
+        deathRoll();
+            if (gameState.gameOver) {
+                gameState.message = gameState.death
+            } else if (subject === 'dropOut') {
             gameState.subject = 'dropOut';
-            message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
+            gameState.message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
             <br><a href=http://localhost:3005/api/Rockstar?rockstar=rockstar>I'm going to be a rockstar</a>
             <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I need a jerb</a> `
         }   else if (subject === 'Gym') {
             gameState.subject = 'Gym';
-            message = `<p>${gameState.name} Finished high school. What's your plan? <p>
+            gameState.message = `<p>${gameState.name} Finished high school. What's your plan? <p>
             <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `
         }   else if (subject = 'Math') {
             gameState.subject === 'Math';
-            message = `${gameState.name} Finished high school. What's your plan? 
+            gameState.message = `${gameState.name} Finished high school. What's your plan? 
             <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `
         };
     updateGameById(gameState._id, gameState);
-    return message;
+    return gameState.message;
     }
 
     const chooseCollege = (college) => {
@@ -199,9 +205,9 @@ const choosePads = (pads) => {
         if (kids) {
         gameState.kids = true;
         message = `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
-        <br><a href=http://localhost:3005/api/adult?drunk=drunk>Wine o'clock is my hobby.</a>
+        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby=wineo>Wine o'clock is my hobby.</a>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Of course. Balance is important.</a>
-        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Nope.</a>`
+        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby="">Nope.</a>`
         };
     updateGameById(gameState._id, gameState);
     return message;
@@ -260,6 +266,7 @@ const choosePads = (pads) => {
         }
 
      const nuclearFamCrisis = (nucFam) => {
+        
         addRandomRisk();
         if (gameState.kids === true && gameState.job === true) {
             gameState.nucFam = true;
@@ -273,7 +280,14 @@ const choosePads = (pads) => {
         updateGameById(gameState._id, gameState);
         }
 
-    const midLifeCrisis = (crisis) => {
+    const midLifeCrisis = (crisis, hobby) => {
+    //     gameState.hobbyUpdate = hobby
+    //     if (gameState.hobbyUpdate = "wineo") {
+    //         gameState.wineo = 1
+    //         wineRandomRisk();
+    //    } else if (gameState.hobbyUpdate = "") {
+    //        gameState.hobby = ""
+    //    }
         addRandomRisk();
         homeMakerCrisis();
         nuclearFamCrisis();
@@ -285,15 +299,17 @@ const choosePads = (pads) => {
         gameState.midlife = midlife;
         gameState.retire = retire;
         if (gameState.midlife === 'wineo') {
-            gameState.wineo = true
-        };
+            gameState.wineo = 1
+            wineRandomRisk();
+        }
         console.log(midlife);
-        if (gameState.retire === false) {
+        if (gameState.retire === false && gameState.wineo < 1.9) {
             gameState.message = `<p> you have no job. time to die.</p>`
-        } else {
+        } else if (gameState.retire == true && gameState.wineo < 1.9){
             gameState.message = `<p> Do you want to retire now? </p>`
         }
         updateGameById(gameState._id, gameState);
+        console.log(gameState.message)
         return gameState.message;
     }
     
@@ -304,10 +320,9 @@ const choosePads = (pads) => {
     module.exports= { 
         startGame,
         createGameState,
-        gameState, 
-        youLazy, 
-        addRandomRisk, 
-        endGame, 
+        // youLazy, 
+        // addRandomRisk, 
+        // endGame, 
         chooseHobby,
         choosePads,
         chooseSubject,

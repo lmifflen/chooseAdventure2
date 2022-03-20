@@ -53,9 +53,16 @@ const gameSchema = new mongoose.Schema({
         type: String,
     },
     wineo: {
-        type: Boolean,
+        type: Number,
     },
-});
+    death: {
+        type: String,
+    },
+    gameOver: {
+        type: Boolean,
+    }
+
+    });
 
 const Game = mongoose.model("Game", gameSchema)
 

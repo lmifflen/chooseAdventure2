@@ -76,7 +76,8 @@ router.get("/Dink", async (req, res) => {
 });
 router.get("/Crisis", async (req, res) => {
     let crisis = req.query.crisis;
-    let choice = midLifeCrisis(crisis);
+    let hobby = req.query.hobby;
+    let choice = midLifeCrisis(crisis, hobby);
     res.send(choice);
 });
 router.get("/Retire", async (req, res) => {
