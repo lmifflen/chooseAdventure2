@@ -8,7 +8,7 @@ function endGame() {
 
 function youLazy() {
     if (gameState.inactivity >= 1) {
-        gameState.inactivity += 1*Math.random();
+        gameState.inactivity = 1 + 1*Math.random();
         if (gameState.inactivity >= 1.9) {
             gameState.death = `<p> ${gameState.name} Did not keep up with their health and died due to inactivity. <br>
             <a href=http://localhost:3005/api/start>Please play again!</a></p>`
@@ -20,7 +20,7 @@ function youLazy() {
 
 function addRandomRisk() {
     if (gameState.risky >= 1) {
-        gameState.risky += 1 * Math.random();
+        gameState.risky = 1 + 1 * Math.random();
         if (gameState.risky >= 1.9) {
             gameState.death = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
             and died. Better luck in the next life. <br>
@@ -33,7 +33,7 @@ function addRandomRisk() {
 
 function wineRandomRisk() {
     if (gameState.wineo >= 1) {
-        gameState.wineo += 1 * Math.random();
+        gameState.wineo = 1 + 1 * Math.random();
         if (gameState.wineo >= 1.9) {
             gameState.death = `<p> ${gameState.name} partook in the wine a bit too much. Not sure if it's the fatty liver 
             or drunk driving the killed them but it certainly was the excessive drinking. <br>

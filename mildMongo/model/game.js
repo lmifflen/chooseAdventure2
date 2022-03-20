@@ -187,9 +187,10 @@ const choosePads = (pads) => {
     }
 
     const chooseCollege = (college) => {
-        let message;
-        addRandomRisk();
-            if (college) {
+        deathRoll();
+        if (gameState.gameOver) {
+            gameState.message = gameState.death
+        } else if (college) {
             gameState.college = true;
             message = `<p>${gameState.name} finished college. What's your plan now? <p>
             <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
