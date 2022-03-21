@@ -5,68 +5,6 @@ const { deleteGameById,
     updateGameById } = require("./gameModel");
 const { deathRoll } = require("./deathRoll");
 
-    // function endGame() {
-    //     if (gameState.risky >= 1.9) {
-    //         gameState.gameOver = true;
-    //     } else if (gameState.inactivity >= 1.9 ) {
-    //         gameState.gameOver = true;
-    //     }
-    // }
-    
-    // function youLazy() {
-    //     if (gameState.inactivity >= 1) {
-    //         gameState.inactivity += 1*Math.random();
-    //     }
-    // }
-    
-    
-    // function addRandomRisk() {
-    //     if (gameState.risky >= 1) {
-    //         gameState.risky += 1 * Math.random();
-    //         if (gameState.risky >= 1.9) {
-    //             message = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
-    //             and died. Better luck in the next life. <br>
-    //             <a href=http://localhost:3005/api/start>Please play again!</a></p>`
-    //         }
-    //         return message;
-    //         updateGameById(gameState._id, gameState);            
-    //     }
-    // }
-
-    // function wineRandomRisk() {
-    //     if (gameState.wineo >= 1) {
-    //         gameState.wineo += 1 * Math.random();
-    //         if (gameState.wineo >= 1.9) {
-    //             gameState.message = `<p> ${gameState.name} partook in the wine a bit too much. Not sure if it's the fatty liver 
-    //             or drunk driving the killed them but it certainly was the excessive drinking. <br>
-    //             <a href=http://localhost:3005/api/start>Please play again!</a></p>`
-    //         }
-    //         console.log(gameState.wineo);
-    //         return gameState.message;
-    //         updateGameById(gameState._id, gameState);            
-    //     }
-    // }
-
-// let gameState = {
-//     name: "",
-//     risk: 0,
-//     inactivity: 0,
-//     hobby: "",
-//     subject: "",
-//     college: false,
-//     kids: false,
-//     job: false,
-//     dink: false,
-//     midLifeCrisis: false,
-//     retire: false,
-//     wineo: 0,
-// };
-
-// const startGame = () => {
-//     return `Welcome to the game of life. Please enter your name 
-//     http://localhost:3005/api/Name?name=`;
-// };
-
 const startGame = () => {
     return `<p>Welcome to the game of life. Please enter your name </p>
     <input id="name" />
@@ -246,7 +184,6 @@ const choosePads = (pads) => {
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`
         };
     updateGameById(gameState._id, gameState);
-    console.log(gameState.message)
     return gameState.message;
     }
 
@@ -321,7 +258,6 @@ const choosePads = (pads) => {
             <a href=http://localhost:3005/api/Ending?ending=no>No</br></a>`
         }
         updateGameById(gameState._id, gameState);
-        console.log(gameState.message)
         return gameState.message;
     }
     
@@ -343,21 +279,12 @@ const choosePads = (pads) => {
             their hobby, ${gameState.hobby}. They eventually passing away at ${gameState.age}. </p>`
         }
         updateGameById(gameState._id, gameState);
-        console.log(gameState.message)
         return gameState.message;
-    }
-    
-
-
-
-
+    }   
 
     module.exports= { 
         startGame,
         createGameState,
-        // youLazy, 
-        // addRandomRisk, 
-        // endGame, 
         chooseHobby,
         choosePads,
         chooseSubject,

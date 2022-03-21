@@ -12,11 +12,9 @@ function youLazy() {
         if (gameState.inactivity >= 1.9) {
             gameState.death = `<p> ${gameState.name} Did not keep up with their health and died due to inactivity. <br>
             <a href=http://localhost:3005/api/start>Please play again!</a></p>`
-        }
-    
+        }    
     }
 }
-
 
 function addRandomRisk() {
     if (gameState.risky >= 1) {
@@ -25,9 +23,7 @@ function addRandomRisk() {
             gameState.death = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
             and died. Better luck in the next life. <br>
             <a href=http://localhost:3005/api/start>Please play again!</a></p>`
-        }
-        
-               
+        }              
     }
 }
 
@@ -55,24 +51,9 @@ const nuclearWar = () => {
         the post apocalyptic nuclear winter. <br>
         <a href=http://localhost:3005/api/start>Please play again!</a></p>`
     }
-    console.log(gameState.nukes)
 }
 
-// function hobbyUpdate() {
-//     if (gameState.hobbyUpdate) {
-//     gameState.hobbyUpdate = hobby
-//         if (gameState.hobbyUpdate = "wineo") {
-//             gameState.wineo = 1
-//             wineRandomRisk();
-//        } else if (gameState.hobbyUpdate = "") {
-//            gameState.hobby = ""
-//            gameState.inactivity = 1
-//        }
-//     }
-// }
-
 const deathRoll = () => {
-    // hobbyUpdate();
     addRandomRisk();
     youLazy();
     wineRandomRisk();
@@ -81,6 +62,7 @@ const deathRoll = () => {
     endAge();
     updateGameById(gameState._id, gameState); 
 }
+
 module.exports = {
     deathRoll
 }
