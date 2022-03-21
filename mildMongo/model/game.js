@@ -188,7 +188,8 @@ const choosePads = (pads) => {
     }
 
     const dinkCrisis = (dink) => {
-            if (gameState.job === true && gameState.kids === false) {
+            if (gameState.job === true && gameState.kids === false) 
+            {
             gameState.dink = true;
             gameState.message = `<p>You've been working now for 20 years. You're starting to feel empty on the inside. 
                 Something is missing. This must be the mid life crisis. What will you do?
@@ -209,7 +210,7 @@ const choosePads = (pads) => {
             </p>`
         }
         updateGameById(gameState._id, gameState);
-        }
+    }
 
      const nuclearFamCrisis = (nucFam) => {
         
@@ -223,7 +224,7 @@ const choosePads = (pads) => {
             </p>`
         };
         updateGameById(gameState._id, gameState);
-        }
+    }
 
     const midLifeCrisis = (crisis, hobby) => {
         gameState.hobbyUpdate = hobby
@@ -268,15 +269,19 @@ const choosePads = (pads) => {
             gameState.message = gameState.death
         } else if (gameState.ending === 'retire' && gameState.hobby === ""){
             gameState.message = `<p> ${gameState.name} lived a boring life without any hobbies. They retired and then died
-            6 months later because they had no purpose left in life.</p>`
+            6 months later because they had no purpose left in life.
+            <a href=http://localhost:3005/api/start>Please play again!</a></p>`
         } else if (gameState.ending === 'no' && gameState.hobby === "") {
-            gameState.message = `<p> ${gameState.name} was found dead in the office at the age of ${gameState.age}. </p>`
+            gameState.message = `<p> ${gameState.name} was found dead in the office at the age of ${gameState.age}. 
+            <a href=http://localhost:3005/api/start>Please play again!</a></p>`
         } else if ( gameState.ending === 'retire' && gameState.hobby !== "") {
             gameState.message = `<p> ${gameState.name} enjoyed spending time with their family and doing their hobby ${gameState.hobby}
-            They lived a full life eventually passing away at ${gameState.age}. </p>`
+            They lived a full life eventually passing away at ${gameState.age}. 
+            <a href=http://localhost:3005/api/start>Please play again!</a></p>`
         } else if ( gameState.ending === 'no' && gameState.hobby !== "") {
             gameState.message = `<p> ${gameState.name} kept their energy until late in life continuing to work, spend time with family and doing
-            their hobby, ${gameState.hobby}. They eventually passing away at ${gameState.age}. </p>`
+            their hobby, ${gameState.hobby}. They eventually passedaway at ${gameState.age}. 
+            <a href=http://localhost:3005/api/start>Please play again!</a></p>`
         }
         updateGameById(gameState._id, gameState);
         return gameState.message;
