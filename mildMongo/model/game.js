@@ -55,24 +55,31 @@ const createGameState = async (name) => {
   return message;
 };
 
+var hobbyObj = {
+  Bike: "biking",
+  Swim: "swimming",
+  Crafts: "crafts"
+};
+console.log(hobbyObj.Bike)
 const chooseHobby = (hobby) => {
   let message;
   if (hobby === "Bike") {
-    gameState.hobby = "biking";
+    gameState.hobby = hobbyObj.Bike
+    console.log(hobbyObj.Bike);
     message = `<p>${gameState.name}'s favourite hobby is biking. How do you feel about wearing pads while you bike? <br>
         <a href=http://localhost:3005/api/Pads?pads=yes>Safety first!</a> <br>
         <a href=http://localhost:3005/api/Pads?pads=no>I don't need no protection!</a>
         </p>`;
   }
   if (hobby === "Swim") {
-    gameState.hobby = "swimming";
+    gameState.hobby = hobbyObj.Swim;
     message = `<p>${gameState.name}'s favourite hobby is swimming. What's your favourite subject in school?<br>
         <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
         <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
         <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> </p>`;
   }
   if (hobby === "Crafts") {
-    gameState.hobby = "crafts";
+    gameState.hobby = hobbyObj.Crafts;
     message = `<p>${gameState.name}'s favourite hobby is crafts.  What's your favourite subject in school?<br>
         <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
         <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
@@ -106,24 +113,29 @@ const choosePads = (pads) => {
   updateGameById(gameState._id, gameState);
   return gameState.message;
 };
+const subjectObj = {
+  dropOut: "dropOut",
+  Gym: "Gym",
+  Math:"Math"
+}
 
 const chooseSubject = (subject) => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
   } else if (subject === "dropOut") {
-    gameState.subject = "dropOut";
+    gameState.subject = subjectObj.dropOut;
     gameState.message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
             <br><a href=http://localhost:3005/api/Rockstar?rockstar=rockstar>I'm going to be a rockstar</a>
             <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I need a jerb</a> `;
   } else if (subject === "Gym") {
-    gameState.subject = "Gym";
+    gameState.subject = subjectObj.Gym;
     gameState.message = `<p>${gameState.name} Finished high school. What's your plan? <p>
             <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `;
-  } else if ((subject = "Math")) {
-    gameState.subject === "Math";
+  } else if ((subject === "Math")) {
+    gameState.subject = subjectObj.Math;
     gameState.message = `${gameState.name} Finished high school. What's your plan? 
             <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
             <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `;

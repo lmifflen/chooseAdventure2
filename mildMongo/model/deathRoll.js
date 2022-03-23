@@ -48,8 +48,6 @@ const endAge = () => {
   while (i <= 0.99) {
     gameState.endAge += i;
     i = Math.random();
-    // console.log(i)
-    // console.log(gameState.endAge)
   }
 };
 
