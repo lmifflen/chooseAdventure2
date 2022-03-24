@@ -1,24 +1,9 @@
-const {
-  deleteGameById,
-  createGame,
-  findAllGames,
-  findGameById,
-  updateGameById,
-} = require("./gameModel");
+const { createGame, findGameById, updateGameById } = require("./gameModel");
 const { deathRoll, endAge } = require("./deathRoll");
-const { action, hobbyObj, subjectObj } = require("./objects")
+const { action, hobbyObj, subjectObj } = require("./objects");
 
 const startGame = () => {
-  return `<p>Welcome to the game of life. Please enter your name </p>
-    <input id="name" />
-    <a id="link"><button>Go</button></a>
-    <script>
-    let nameInput = document.getElementById('name')
-        nameInput.addEventListener('keyup', (e)=>{
-            let link = document.getElementById('link')
-            link.setAttribute('href', 'http://localhost:3005/api/Name?name='+e.target.value)
-        })
-    </script>`;
+  return action.welcome;
 };
 
 const createGameState = async (name) => {
@@ -50,24 +35,21 @@ const createGameState = async (name) => {
   let newGameId = newGameState._id;
   let game = await findGameById(newGameId);
   gameState = game;
-  let message = `<p>Welcome to the game of life ${name}! Do you want your hobby to be <a href=http://localhost:3005/api/Hobby?hobby=Bike>Biking</a>, 
-    <a href=http://localhost:3005/api/Hobby?hobby=Swim>Swimming</a> or <a href=http://localhost:3005/api/Hobby?hobby=Crafts>Crafts</a>?</p>
-    `;
+  let message = action.start.S1 + name + action.start.S2;
   return message;
 };
 
-
-
 const chooseHobby = (hobby) => {
   let message;
-  gameState.hobby = hobbyObj[hobby]
-  switch(hobby) {
+  gameState.hobby = hobbyObj[hobby];
+  switch (hobby) {
     case "Bike":
-        message = `${gameState.name}'s ${action.hobby.Bike}`;
-        break;
-    default: 
+      message = `${gameState.name}'s ${action.hobby.Bike}`;
+      break;
+    default:
       message = `${gameState.name}'s ${
-      action.hobby.Other1 + gameState.hobby + action.hobby.Other2}`;
+        action.hobby.Other1 + gameState.hobby + action.hobby.Other2
+      }`;
       break;
   }
   updateGameById(gameState._id, gameState);
@@ -91,33 +73,14 @@ const choosePads = (pads) => {
   return gameState.message;
 };
 
-
-
-// const chooseSubject = (subject) => {
-//   gameState.subject = subjectObj[subject]
-//   deathRoll();
-//   switch (gameState.gameOver, subject) {
-//     case gameState.gameOver:
-//       gameState.message = gameState.death;
-//     break;
-//     case "dropOut":
-//       gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
-//       break;
-//     default:
-//       gameState.message = gameState.name + action.subject.School;
-//     }
-//     updateGameById(gameState._id, gameState);
-//     return gameState.message;
-//   };
-
-
 const chooseSubject = (subject) => {
-  gameState.subject = subjectObj[subject]
+  gameState.subject = subjectObj[subject];
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
   } else if (subject === "dropOut") {
-    gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
+    gameState.message =
+      action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
   } else {
     gameState.message = gameState.name + action.subject.School;
   }
@@ -125,49 +88,42 @@ const chooseSubject = (subject) => {
   return gameState.message;
 };
 
-const chooseCollege = (college) => {
+const chooseCollege = () => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
   } else {
     gameState.college = true;
-    gameState.message = `<p>${gameState.name} finished college. What's your plan now? <p>
-            <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
-            <br><a href=http://localhost:3005/api/Job?job=job>I need a job to pay off these damn student loans</a> `;
+    gameState.message = gameState.name + action.college;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
 };
 
-const haveKids = (kids) => {
+const haveKids = () => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
   } else {
     gameState.kids = true;
-    gameState.message = `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
-        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby=wineo>Wine o'clock is my hobby.</a>
-        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Of course. Balance is important.</a>
-        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby="">Nope.</a>`;
+    gameState.message = gameState.kids;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
 };
 
-const getJob = (job) => {
+const getJob = () => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
   } else {
     gameState.job = true;
-    gameState.message = `<p>You managed to land a job. Life's good. What now?</p>
-        <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
-        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`;
+    gameState.message = action.job;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
 };
-const rockStar = (rockstar) => {
+const rockStar = () => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
@@ -175,22 +131,20 @@ const rockStar = (rockstar) => {
     gameState.rockstar = true;
     gameState.job = true;
     gameState.wineo = 1;
-    gameState.message = `<p>You're a struggling musician. That's the life you chose. What now?</p>
-        <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
-        <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`;
+    gameState.message = action.rockstar;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
 };
 
-const dinkCrisis = (dink) => {
+const dinkCrisis = () => {
   if (gameState.job === true && gameState.kids === false) {
     gameState.dink = true;
     gameState.message = action.crisis.Dink;
   }
   updateGameById(gameState._id, gameState);
 };
-const homeMakerCrisis = (homemaker) => {
+const homeMakerCrisis = () => {
   if (gameState.kids === true && gameState.job === false) {
     gameState.homemaker = true;
     gameState.message = action.crisis.Homemaker;
@@ -198,7 +152,7 @@ const homeMakerCrisis = (homemaker) => {
   updateGameById(gameState._id, gameState);
 };
 
-const nuclearFamCrisis = (nucFam) => {
+const nuclearFamCrisis = () => {
   if (gameState.kids === true && gameState.job === true) {
     gameState.nucFam = true;
     gameState.message = action.crisis.Nucfam;
@@ -233,10 +187,8 @@ const retirementOption = (retire, midlife) => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
-  } else if (gameState.retire) {
-    gameState.message = `<p> Do you want to retire now? </p>
-            <a href=http://localhost:3005/api/Ending?ending=retire>Yes</br></a>
-            <a href=http://localhost:3005/api/Ending?ending=no>No</br></a>`;
+  } else {
+    gameState.message = action.retire;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
@@ -262,7 +214,7 @@ const thisMustBeTheEnd = (ending) => {
             <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
   } else if (gameState.ending === "no" && gameState.hobby !== "") {
     gameState.message = `<p> ${gameState.name} kept their energy until late in life continuing to work, spend time with family and doing
-            their hobby, ${gameState.hobby}. They eventually passedaway at ${gameState.endAge}. 
+            their hobby, ${gameState.hobby}. They eventually passed away at ${gameState.endAge}. 
             <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
   }
   updateGameById(gameState._id, gameState);

@@ -4,7 +4,24 @@ const hobbyObj = {
     Swim: "swimming",
     Crafts: "crafts",
   };
+
   const action = {
+    welcome: `<p>Welcome to the game of life. Please enter your name </p>
+    <input id="name" />
+    <a id="link"><button>Go</button></a>
+    <script>
+    let nameInput = document.getElementById('name')
+        nameInput.addEventListener('keyup', (e)=>{
+            let link = document.getElementById('link')
+            link.setAttribute('href', 'http://localhost:3005/api/Name?name='+e.target.value)
+        })
+    </script>`,
+    start: {
+        S1:`<p>Welcome to the game of life `,
+        S2:`! Do you want your hobby to be <a href=http://localhost:3005/api/Hobby?hobby=Bike>Biking</a>, 
+        <a href=http://localhost:3005/api/Hobby?hobby=Swim>Swimming</a> or 
+        <a href=http://localhost:3005/api/Hobby?hobby=Crafts>Crafts</a>?</p>`,
+    },
     hobby: {
       Bike: ` favourite hobby is biking. How do you feel about wearing pads while you bike?<br>
           <a href=http://localhost:3005/api/Pads?pads=yes>Safety first!</a> <br>
@@ -54,8 +71,41 @@ const hobbyObj = {
         <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=yogi>I think I'll become a yoga instructor.</br></a>
         <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=car>I think I'll get a yellow convertible</br></a>
         </p>`,
+    },
+    college: ` finished college. What's your plan now?
+    <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+    <br><a href=http://localhost:3005/api/Job?job=job>I need a job to pay off these damn student loans</a> `,
+    kids: `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
+    <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby=wineo>Wine o'clock is my hobby.</a>
+    <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Of course. Balance is important.</a>
+    <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby="">Nope.</a>`,
+    job: `<p>You managed to land a job. Life's good. What now?</p>
+    <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+    <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`,
+    rockstar:`<p>You're a struggling musician. That's the life you chose. What now?</p>
+    <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+    <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`,
+    retire: `<p> Do you want to retire now? </p>
+    <a href=http://localhost:3005/api/Ending?ending=retire>Yes</br></a>
+    <a href=http://localhost:3005/api/Ending?ending=no>No</br></a>`,
+    death: {
+        nukes: {
+            n1: `<p> Unfortunatly the descisions `,
+            n2: ` made in life do not matter. They were born in the wrong timeline. Nuclear war has broke out and they slowly starved to death in 
+            the post apocalyptic nuclear winter. <br>
+            <a href=http://localhost:3005/api/start>Please play again!</a>`,
+        },
+        wineo: ` partook in the wine a bit too much. Not sure if it's the fatty liver 
+        or drunk driving the killed them but it certainly was the excessive drinking. <br>
+        <a href=http://localhost:3005/api/start>Please play again!</a></p>`,
+        risky: ` chose not to wear protective gear and got in a terrible biking accident
+        and died. Better luck in the next life. <br>
+        <a href=http://localhost:3005/api/start>Please play again!</a>`,
+        lazy: `  did not keep up with their health and died due to inactivity. <br>
+        <a href=http://localhost:3005/api/start>Please play again!</a>`
     }
   };
+
   const subjectObj = {
     dropOut: "dropOut",
     Gym: "Gym",
@@ -66,4 +116,4 @@ const hobbyObj = {
       action,
       hobbyObj,
       subjectObj,
-  }
+  };

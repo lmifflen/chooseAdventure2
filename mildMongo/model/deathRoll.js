@@ -1,4 +1,5 @@
 const { updateGameById } = require("./gameModel");
+const { action } = require("./objects");
 
 function endGame() {
   if (
@@ -15,8 +16,7 @@ function youLazy() {
   if (gameState.inactivity >= 1) {
     gameState.inactivity = 1 + 1 * Math.random();
     if (gameState.inactivity >= 1.9) {
-      gameState.death = `<p> ${gameState.name} Did not keep up with their health and died due to inactivity. <br>
-            <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
+      gameState.death = gameState.name + action.death.lazy;
     }
   }
 }
@@ -25,9 +25,7 @@ function addRandomRisk() {
   if (gameState.risky >= 1) {
     gameState.risky = 1 + 1 * Math.random();
     if (gameState.risky >= 1.9) {
-      gameState.death = `<p> ${gameState.name} chose not to wear protective gear and got in a terrible biking accident
-            and died. Better luck in the next life. <br>
-            <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
+      gameState.death = gameState.name + action.death.risky;
     }
   }
 }
@@ -36,9 +34,7 @@ function wineRandomRisk() {
   if (gameState.wineo >= 1) {
     gameState.wineo = 1 + 1 * Math.random();
     if (gameState.wineo >= 1.9) {
-      gameState.death = `<p> ${gameState.name} partook in the wine a bit too much. Not sure if it's the fatty liver 
-            or drunk driving the killed them but it certainly was the excessive drinking. <br>
-            <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
+      gameState.death = gameState.name + action.death.wineo;
     }
   }
 }
@@ -54,10 +50,7 @@ const endAge = () => {
 const nuclearWar = () => {
   gameState.nukes = 1 + 1 * Math.random();
   if (gameState.nukes >= 1.98) {
-    gameState.death = `<p> Unfortunatly the descisions ${gameState.name} made in life do not matter.
-        They were born in the wrong timeline. Nuclear war has broke out and they slowly starved to death in 
-        the post apocalyptic nuclear winter. <br>
-        <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
+    gameState.death = action.death.nukes.n1 + gameState.name + action.death.nukes.n2;
   }
 };
 
