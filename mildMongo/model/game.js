@@ -93,48 +93,43 @@ const choosePads = (pads) => {
 
 
 
-const chooseSubject = (subject) => {
-  gameState.subject = subjectObj[subject]
-  deathRoll();
-  switch (gameState.gameOver, subject) {
-    case gameState.gameOver:
-      gameState.message = gameState.death;
-    break;
-    case "dropOut":
-      gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
-      break;
-    default:
-      gameState.message = gameState.name + action.subject.School;
-    }
-    updateGameById(gameState._id, gameState);
-    return gameState.message;
-  };
-
-
 // const chooseSubject = (subject) => {
 //   gameState.subject = subjectObj[subject]
 //   deathRoll();
-//   if (gameState.gameOver) {
-//     gameState.message = gameState.death;
-//   } else if (subject === "dropOut") {
-//     gameState.subject = subjectObj.dropOut;
-//     gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
-//   } else if (subject === "Gym") {
-//     gameState.subject = subjectObj.Gym;
-//     gameState.message = gameState.name + action.subject.School;
-//   } else if (subject === "Math") {
-//     gameState.subject = subjectObj.Math;
-//     gameState.message = gameState.name + action.subject.School;;
-//   }
-//   updateGameById(gameState._id, gameState);
-//   return gameState.message;
-// };
+//   switch (gameState.gameOver, subject) {
+//     case gameState.gameOver:
+//       gameState.message = gameState.death;
+//     break;
+//     case "dropOut":
+//       gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
+//       break;
+//     default:
+//       gameState.message = gameState.name + action.subject.School;
+//     }
+//     updateGameById(gameState._id, gameState);
+//     return gameState.message;
+//   };
+
+
+const chooseSubject = (subject) => {
+  gameState.subject = subjectObj[subject]
+  deathRoll();
+  if (gameState.gameOver) {
+    gameState.message = gameState.death;
+  } else if (subject === "dropOut") {
+    gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
+  } else {
+    gameState.message = gameState.name + action.subject.School;
+  }
+  updateGameById(gameState._id, gameState);
+  return gameState.message;
+};
 
 const chooseCollege = (college) => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
-  } else if (college) {
+  } else {
     gameState.college = true;
     gameState.message = `<p>${gameState.name} finished college. What's your plan now? <p>
             <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
@@ -148,7 +143,7 @@ const haveKids = (kids) => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
-  } else if (kids) {
+  } else {
     gameState.kids = true;
     gameState.message = `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
         <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby=wineo>Wine o'clock is my hobby.</a>
@@ -163,7 +158,7 @@ const getJob = (job) => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
-  } else if (job) {
+  } else {
     gameState.job = true;
     gameState.message = `<p>You managed to land a job. Life's good. What now?</p>
         <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
@@ -176,7 +171,7 @@ const rockStar = (rockstar) => {
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
-  } else if (rockstar) {
+  } else {
     gameState.rockstar = true;
     gameState.job = true;
     gameState.wineo = 1;
