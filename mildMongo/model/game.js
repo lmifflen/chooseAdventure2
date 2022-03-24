@@ -94,22 +94,41 @@ const choosePads = (pads) => {
 
 
 const chooseSubject = (subject) => {
+  gameState.subject = subjectObj[subject]
   deathRoll();
-  if (gameState.gameOver) {
-    gameState.message = gameState.death;
-  } else if (subject === "dropOut") {
-    gameState.subject = subjectObj.dropOut;
-    gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
-  } else if (subject === "Gym") {
-    gameState.subject = subjectObj.Gym;
-    gameState.message = gameState.name + action.subject.School;
-  } else if (subject === "Math") {
-    gameState.subject = subjectObj.Math;
-    gameState.message = gameState.name + action.subject.School;;
-  }
-  updateGameById(gameState._id, gameState);
-  return gameState.message;
-};
+  switch (gameState.gameOver, subject) {
+    case gameState.gameOver:
+      gameState.message = gameState.death;
+    break;
+    case "dropOut":
+      gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
+      break;
+    default:
+      gameState.message = gameState.name + action.subject.School;
+    }
+    updateGameById(gameState._id, gameState);
+    return gameState.message;
+  };
+
+
+// const chooseSubject = (subject) => {
+//   gameState.subject = subjectObj[subject]
+//   deathRoll();
+//   if (gameState.gameOver) {
+//     gameState.message = gameState.death;
+//   } else if (subject === "dropOut") {
+//     gameState.subject = subjectObj.dropOut;
+//     gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
+//   } else if (subject === "Gym") {
+//     gameState.subject = subjectObj.Gym;
+//     gameState.message = gameState.name + action.subject.School;
+//   } else if (subject === "Math") {
+//     gameState.subject = subjectObj.Math;
+//     gameState.message = gameState.name + action.subject.School;;
+//   }
+//   updateGameById(gameState._id, gameState);
+//   return gameState.message;
+// };
 
 const chooseCollege = (college) => {
   deathRoll();
