@@ -1,0 +1,3 @@
+This project was created for Inception U project 1.
+It showcases how to builed express routers and servers, use switch and if else statements, connect to mongoos and use JSON objects for templating.
+Furture work for this could include making a prettier front end, using the database more to share previous lives, and create more intracte storylines based on selections.
