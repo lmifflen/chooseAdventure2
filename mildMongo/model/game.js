@@ -58,36 +58,78 @@ const createGameState = async (name) => {
 var hobbyObj = {
   Bike: "biking",
   Swim: "swimming",
-  Crafts: "crafts"
+  Crafts: "crafts",
 };
-console.log(hobbyObj.Bike)
-const chooseHobby = (hobby) => {
-  let message;
-  if (hobby === "Bike") {
-    gameState.hobby = hobbyObj.Bike
-    console.log(hobbyObj.Bike);
-    message = `<p>${gameState.name}'s favourite hobby is biking. How do you feel about wearing pads while you bike? <br>
+const action = {
+  hobby: {
+    Bike: ` favourite hobby is biking. How do you feel about wearing pads while you bike?<br>
         <a href=http://localhost:3005/api/Pads?pads=yes>Safety first!</a> <br>
         <a href=http://localhost:3005/api/Pads?pads=no>I don't need no protection!</a>
-        </p>`;
-  }
-  if (hobby === "Swim") {
-    gameState.hobby = hobbyObj.Swim;
-    message = `<p>${gameState.name}'s favourite hobby is swimming. What's your favourite subject in school?<br>
+        </p>`,
+    Other1: ` favourite hobby is `,
+    Other2: `. What's your favourite subject in school?<br>
+         <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
+         <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
+         <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> `,
+  },
+  pads: {
+    Yes: ` loves safety and sports!. What's your favourite subject in school?<br>
         <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
         <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
-        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> </p>`;
-  }
-  if (hobby === "Crafts") {
-    gameState.hobby = hobbyObj.Crafts;
-    message = `<p>${gameState.name}'s favourite hobby is crafts.  What's your favourite subject in school?<br>
+        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a>`,
+    No: `is a bad ass and doesn't wear pads while biking. What's your favourite subject in school?<br>
         <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
         <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
-        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> </p>`;
+        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a>`,
+  },
+  subject: {
+    Dropout1: `School just wasn't for `,
+    Dropout2: `. What's your plan? 
+    <br><a href=http://localhost:3005/api/Rockstar?rockstar=rockstar>I'm going to be a rockstar</a>
+    <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
+    <br><a href=http://localhost:3005/api/Job?job=job>I need a jerb</a>`,
+    School: ` finished high school. What's your plan? <p>
+    <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
+    <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a>`,
+  },
+};
+
+const chooseHobby = (hobby) => {
+  let message;
+  gameState.hobby = hobbyObj[hobby]
+  if (hobby === "Bike") {
+        message = `${gameState.name}'s ${action.hobby.Bike}`;
+  }
+  else { 
+      message = `${gameState.name}'s ${
+      action.hobby.Other1 + gameState.hobby + action.hobby.Other2
+    }`;
   }
   updateGameById(gameState._id, gameState);
   return message;
 };
+
+// const chooseHobby = (hobby) => {
+//   let message;
+//   if (hobby === "Bike") {
+//     gameState.hobby = hobbyObj.Bike;
+//     message = `${gameState.name}'s ${action.hobby.Bike}`;
+//   }
+//   if (hobby === "Swim") {
+//     gameState.hobby = hobbyObj.Swim;
+//     message = `${gameState.name}'s ${
+//       action.hobby.Other1 + gameState.hobby + action.hobby.Other2
+//     }`;
+//   }
+//   if (hobby === "Crafts") {
+//     gameState.hobby = hobbyObj.Crafts;
+//     message = `${gameState.name}'s ${
+//       action.hobby.Other1 + gameState.hobby + action.hobby.Other2
+//     }`;
+//   }
+//   updateGameById(gameState._id, gameState);
+//   return message;
+// };
 
 const choosePads = (pads) => {
   if (pads === "no") {
@@ -96,28 +138,21 @@ const choosePads = (pads) => {
     if (gameState.gameOver) {
       gameState.message = gameState.death;
     } else {
-      gameState.message = `<p>${gameState.name} is a bad ass and doesn't wear pads while biking. What's your favourite subject in school?<br>
-        <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
-        <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
-        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a> </p> 
-        `;
+      gameState.message = gameState.name + action.pads.No;
     }
   }
   if (pads === "yes") {
-    gameState.message = `<p>${gameState.name} loves safety and sports!. What's your favourite subject in school?<br>
-        <a href=http://localhost:3005/api/Subject?subject=Gym>Gym!</a><br>
-        <a href=http://localhost:3005/api/Subject?subject=Math>I'm a mathlete.</a><br>
-        <a href=http://localhost:3005/api/Subject?subject=dropOut>Skool sucks. Imma drop out.</a></p> 
-        `;
+    gameState.message = gameState + action.pads.Yes;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
 };
+
 const subjectObj = {
   dropOut: "dropOut",
   Gym: "Gym",
-  Math:"Math"
-}
+  Math: "Math",
+};
 
 const chooseSubject = (subject) => {
   deathRoll();
@@ -125,20 +160,13 @@ const chooseSubject = (subject) => {
     gameState.message = gameState.death;
   } else if (subject === "dropOut") {
     gameState.subject = subjectObj.dropOut;
-    gameState.message = `<p>School just wasn't for ${gameState.name}. What's your plan? <p>
-            <br><a href=http://localhost:3005/api/Rockstar?rockstar=rockstar>I'm going to be a rockstar</a>
-            <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
-            <br><a href=http://localhost:3005/api/Job?job=job>I need a jerb</a> `;
+    gameState.message = action.subject.Dropout1 + gameState.name + action.subject.Dropout2;
   } else if (subject === "Gym") {
     gameState.subject = subjectObj.Gym;
-    gameState.message = `<p>${gameState.name} Finished high school. What's your plan? <p>
-            <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
-            <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `;
-  } else if ((subject === "Math")) {
+    gameState.message = gameState.name + action.subject.School;
+  } else if (subject === "Math") {
     gameState.subject = subjectObj.Math;
-    gameState.message = `${gameState.name} Finished high school. What's your plan? 
-            <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
-            <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a> `;
+    gameState.message = gameState.name + action.subject.School;;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
