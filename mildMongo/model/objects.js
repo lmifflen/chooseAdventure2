@@ -3,6 +3,8 @@ const hobbyObj = {
     Bike: "biking",
     Swim: "swimming",
     Crafts: "crafts",
+    Wineo: "drinking too much",
+    Nothing: "watching paint dry",
   };
 
   const action = {
@@ -78,7 +80,7 @@ const hobbyObj = {
     kids: `<p>Congratulations! you have wonderful children! They sure take up a lot of time! Are you keeping up with your hobbies?</p>
     <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby=wineo>Wine o'clock is my hobby.</a>
     <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Of course. Balance is important.</a>
-    <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby="">Nope.</a>`,
+    <br><a href=http://localhost:3005/api/Crisis?crisis=crisis&hobby=nothing>Nope.</a>`,
     job: `<p>You managed to land a job. Life's good. What now?</p>
     <br><a href=http://localhost:3005/api/Kids?kids=kids>Time to have kids!</a>
     <br><a href=http://localhost:3005/api/Crisis?crisis=crisis>Imma do me.</a>`,
@@ -88,6 +90,18 @@ const hobbyObj = {
     retire: `<p> Do you want to retire now? </p>
     <a href=http://localhost:3005/api/Ending?ending=retire>Yes</br></a>
     <a href=http://localhost:3005/api/Ending?ending=no>No</br></a>`,
+    ending: {
+        Dink: {
+            retire: `decided to retire and spend their time doing their hobby, `,
+            work: ` worked too much and was found dead in their office. 
+                    In their spare time they spent their time `,
+        },
+        Other: {
+            retire: ` enjoyed spending time with their family and doing their hobby, `,
+            work: `kept their energy until late in life continuing to work, spend time with family and doing
+            their hobby, `,
+        },
+    },
     death: {
         nukes: {
             n1: `<p> Unfortunatly the descisions `,
@@ -101,9 +115,11 @@ const hobbyObj = {
         risky: ` chose not to wear protective gear and got in a terrible biking accident
         and died. Better luck in the next life. <br>
         <a href=http://localhost:3005/api/start>Please play again!</a>`,
-        lazy: `  did not keep up with their health and died due to inactivity. <br>
-        <a href=http://localhost:3005/api/start>Please play again!</a>`
-    }
+        lazy: `  did not keep up with their health and died due to inactivity. <br>`,
+        natural: `. They passed away at age `,
+        funeral: `<a href=https://youtu.be/j9V78UbdzWI?t=31><br> See your funeral here</a>.`,
+        playAgain: `<br><a href=http://localhost:3005/api/start>Please play again!</a>`
+    },
   };
 
   const subjectObj = {

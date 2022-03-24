@@ -17,10 +17,8 @@ const createGameState = async (name) => {
     kids: false,
     job: false,
     rockstar: false,
-    dink: false,
+    persona: "",
     midLifeCrisis: false,
-    nucFam: false,
-    homemaker: false,
     retire: false,
     message: "",
     midlife: "",
@@ -67,7 +65,7 @@ const choosePads = (pads) => {
     }
   }
   if (pads === "yes") {
-    gameState.message = gameState + action.pads.Yes;
+    gameState.message = gameState.name + action.pads.Yes;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
@@ -106,7 +104,7 @@ const haveKids = () => {
     gameState.message = gameState.death;
   } else {
     gameState.kids = true;
-    gameState.message = gameState.kids;
+    gameState.message = action.kids;
   }
   updateGameById(gameState._id, gameState);
   return gameState.message;
@@ -139,14 +137,14 @@ const rockStar = () => {
 
 const dinkCrisis = () => {
   if (gameState.job === true && gameState.kids === false) {
-    gameState.dink = true;
+    gameState.persona = "dink";
     gameState.message = action.crisis.Dink;
   }
   updateGameById(gameState._id, gameState);
 };
 const homeMakerCrisis = () => {
   if (gameState.kids === true && gameState.job === false) {
-    gameState.homemaker = true;
+    gameState.persona = "other";
     gameState.message = action.crisis.Homemaker;
   }
   updateGameById(gameState._id, gameState);
@@ -154,7 +152,7 @@ const homeMakerCrisis = () => {
 
 const nuclearFamCrisis = () => {
   if (gameState.kids === true && gameState.job === true) {
-    gameState.nucFam = true;
+    gameState.persona = "other";
     gameState.message = action.crisis.Nucfam;
   }
   updateGameById(gameState._id, gameState);
@@ -164,8 +162,11 @@ const midLifeCrisis = (crisis, hobby) => {
   gameState.hobbyUpdate = hobby;
   if (gameState.hobbyUpdate === "wineo") {
     gameState.wineo = 1;
-  } else if (gameState.hobbyUpdate === "") {
+    gameState.hobby = hobbyObj.Wineo;
+  } else if (gameState.hobbyUpdate === "nothing") {
     gameState.inactivity = 1;
+    gameState.hobby = hobbyObj.Nothing;
+    console.log(hobby);
   }
   deathRoll();
   if (gameState.gameOver) {
@@ -183,6 +184,7 @@ const retirementOption = (retire, midlife) => {
   gameState.retire = retire;
   if (gameState.midlife === "wineo") {
     gameState.wineo = 1;
+    gameState.hobby = hobbyObj.Wineo;
   }
   deathRoll();
   if (gameState.gameOver) {
@@ -201,22 +203,32 @@ const thisMustBeTheEnd = (ending) => {
     gameState.message = gameState.death;
   }
   endAge();
-  if (gameState.ending === "retire" && gameState.hobby === "") {
-    gameState.message = `<p> ${gameState.name} lived a boring life without any hobbies. They retired and then died
-            6 months later because they had no purpose left in life.
-            <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
-  } else if (gameState.ending === "no" && gameState.hobby === "") {
-    gameState.message = `<p> ${gameState.name} was found dead in the office at the age of ${gameState.endAge}. 
-            <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
-  } else if (gameState.ending === "retire" && gameState.hobby !== "") {
-    gameState.message = `<p> ${gameState.name} enjoyed spending time with their family and doing their hobby ${gameState.hobby}
-            They lived a full life eventually passing away at ${gameState.endAge}. 
-            <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
-  } else if (gameState.ending === "no" && gameState.hobby !== "") {
-    gameState.message = `<p> ${gameState.name} kept their energy until late in life continuing to work, spend time with family and doing
-            their hobby, ${gameState.hobby}. They eventually passed away at ${gameState.endAge}. 
-            <a href=http://localhost:3005/api/start>Please play again!</a></p>`;
-  }
+  switch (gameState.persona) {
+    case "dink":
+      switch (ending) {
+        case "retire":
+          gameState.message = gameState.name + action.ending.Dink.retire + gameState.hobby + action.death.natural + 
+          gameState.endAge + action.death.funeral + action.death.playAgain;
+          break;
+        default:
+          gameState.message = gameState.name + action.ending.Dink.work + gameState.hobby + action.death.natural + 
+          gameState.endAge + action.death.funeral + action.death.playAgain;
+          break;
+      }
+    break;
+    default:
+      switch (ending) {
+        case "retire":
+          gameState.message = gameState.name + action.ending.Other.retire + gameState.hobby + action.death.natural + 
+          gameState.endAge + action.death.funeral + action.death.playAgain;
+          break;
+        default:
+          gameState.message = gameState.name + action.ending.Other.work + gameState.hobby + action.death.natural + 
+          gameState.endAge + action.death.funeral + action.death.playAgain;
+          break;
+      }
+    break;
+    }
   updateGameById(gameState._id, gameState);
   return gameState.message;
 };

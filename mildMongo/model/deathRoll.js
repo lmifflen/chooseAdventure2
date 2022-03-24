@@ -16,7 +16,7 @@ function youLazy() {
   if (gameState.inactivity >= 1) {
     gameState.inactivity = 1 + 1 * Math.random();
     if (gameState.inactivity >= 1.9) {
-      gameState.death = gameState.name + action.death.lazy;
+      gameState.death = gameState.name + action.death.lazy + action.death.funeral;
     }
   }
 }
@@ -25,7 +25,7 @@ function addRandomRisk() {
   if (gameState.risky >= 1) {
     gameState.risky = 1 + 1 * Math.random();
     if (gameState.risky >= 1.9) {
-      gameState.death = gameState.name + action.death.risky;
+      gameState.death = gameState.name + action.death.risky + action.death.funeral;
     }
   }
 }
@@ -34,7 +34,7 @@ function wineRandomRisk() {
   if (gameState.wineo >= 1) {
     gameState.wineo = 1 + 1 * Math.random();
     if (gameState.wineo >= 1.9) {
-      gameState.death = gameState.name + action.death.wineo;
+      gameState.death = gameState.name + action.death.wineo + action.death.funeral;
     }
   }
 }
@@ -50,7 +50,7 @@ const endAge = () => {
 const nuclearWar = () => {
   gameState.nukes = 1 + 1 * Math.random();
   if (gameState.nukes >= 1.98) {
-    gameState.death = action.death.nukes.n1 + gameState.name + action.death.nukes.n2;
+    gameState.death = action.death.nukes.n1 + gameState.name + action.death.nukes.n2 + action.death.funeral;
   }
 };
 
