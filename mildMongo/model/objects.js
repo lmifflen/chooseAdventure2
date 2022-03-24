@@ -36,6 +36,25 @@ const hobbyObj = {
       <br><a href=http://localhost:3005/api/College?college=college>Time to go to College</a>
       <br><a href=http://localhost:3005/api/Job?job=job>I'm going to get a job</a>`,
     },
+    crisis: {
+        Dink: `<p>You've been working now for 20 years. You're starting to feel empty on the inside. 
+        Something is missing. This must be the mid life crisis. What will you do?
+        <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=wineo>Let me show you my wine cellar</br></a>
+        <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=jacked>Time to start lifting weights and get a tattoo</br></a>
+        <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=yachty>I think I'll get a yacht like Jeffery</br></a>
+        </p>`,
+        Homemaker: `<p>Your kids are all grown up now and you dont have a job. 
+        Time to exlpore who you are. What will you do?
+        <br><a href=http://localhost:3005/api/Ending?ending=no>Wine o'clock is my hobby.</br></a>
+        <br><a href=http://localhost:3005/api/Retire?retire=true>I think I'll get a job.</br></a>
+        </p>`,
+        Nucfam: `<p>You've succesfully raised your children! Now you have time and money to explore the real you. 
+        What will you do?
+        <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=wineo>Wine o'clock is my hobby.</br></a>
+        <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=yogi>I think I'll become a yoga instructor.</br></a>
+        <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=car>I think I'll get a yellow convertible</br></a>
+        </p>`,
+    }
   };
   const subjectObj = {
     dropOut: "dropOut",

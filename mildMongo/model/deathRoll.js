@@ -45,7 +45,7 @@ function wineRandomRisk() {
 
 const endAge = () => {
   let i = 0;
-  while (i <= 0.99) {
+  while (i <= 0.90) {
     gameState.endAge += i;
     i = Math.random();
   }

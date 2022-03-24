@@ -191,23 +191,14 @@ const rockStar = (rockstar) => {
 const dinkCrisis = (dink) => {
   if (gameState.job === true && gameState.kids === false) {
     gameState.dink = true;
-    gameState.message = `<p>You've been working now for 20 years. You're starting to feel empty on the inside. 
-                Something is missing. This must be the mid life crisis. What will you do?
-            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=wineo>Let me show you my wine cellar</br></a>
-            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=jacked>Time to start lifting weights and get a tattoo</br></a>
-            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=yachty>I think I'll get a yacht like Jeffery</br></a>
-            </p>`;
+    gameState.message = action.crisis.Dink;
   }
   updateGameById(gameState._id, gameState);
 };
 const homeMakerCrisis = (homemaker) => {
   if (gameState.kids === true && gameState.job === false) {
     gameState.homemaker = true;
-    gameState.message = `<p>Your kids are all grown up now and you dont have a job. 
-            Time to exlpore who you are. What will you do?
-            <br><a href=http://localhost:3005/api/Ending?ending=no>Wine o'clock is my hobby.</br></a>
-            <br><a href=http://localhost:3005/api/Retire?retire=true>I think I'll get a job.</br></a>
-            </p>`;
+    gameState.message = action.crisis.Homemaker;
   }
   updateGameById(gameState._id, gameState);
 };
@@ -215,12 +206,7 @@ const homeMakerCrisis = (homemaker) => {
 const nuclearFamCrisis = (nucFam) => {
   if (gameState.kids === true && gameState.job === true) {
     gameState.nucFam = true;
-    gameState.message = `<p>You've succesfully raised your children! Now you have time and money to explore the real you. 
-            What will you do?
-            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=wineo>Wine o'clock is my hobby.</br></a>
-            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=yogi>I think I'll become a yoga instructor.</br></a>
-            <br><a href=http://localhost:3005/api/Retire?retire=true&midlife=car>I think I'll get a yellow convertible</br></a>
-            </p>`;
+    gameState.message = action.crisis.Nucfam;
   }
   updateGameById(gameState._id, gameState);
 };
