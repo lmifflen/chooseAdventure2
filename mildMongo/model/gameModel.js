@@ -19,9 +19,6 @@ const gameSchema = new mongoose.Schema({
   subject: {
     type: String,
   },
-  college: {
-    type: Boolean,
-  },
   rockstar: {
     type: Boolean,
   },
@@ -41,9 +38,6 @@ const gameSchema = new mongoose.Schema({
     type: Boolean,
   },
   message: {
-    type: String,
-  },
-  midlife: {
     type: String,
   },
   wineo: {

@@ -98,7 +98,7 @@ const hobbyObj = {
         },
         Other: {
             retire: ` enjoyed spending time with their family and doing their hobby, `,
-            work: `kept their energy until late in life continuing to work, spend time with family and doing
+            work: ` kept their energy until late in life working, spending time with family and doing
             their hobby, `,
         },
     },

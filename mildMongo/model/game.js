@@ -13,7 +13,7 @@ const createGameState = async (name) => {
     inactivity: 0,
     hobby: "",
     subject: "",
-    college: false,
+
     kids: false,
     job: false,
     rockstar: false,
@@ -72,7 +72,7 @@ const choosePads = (pads) => {
 };
 
 const chooseSubject = (subject) => {
-  gameState.subject = subjectObj[subject];
+  //gameState.subject = subjectObj[subject];
   deathRoll();
   if (gameState.gameOver) {
     gameState.message = gameState.death;
@@ -91,7 +91,6 @@ const chooseCollege = () => {
   if (gameState.gameOver) {
     gameState.message = gameState.death;
   } else {
-    gameState.college = true;
     gameState.message = gameState.name + action.college;
   }
   updateGameById(gameState._id, gameState);
@@ -180,9 +179,8 @@ const midLifeCrisis = (crisis, hobby) => {
 };
 
 const retirementOption = (retire, midlife) => {
-  gameState.midlife = midlife;
-  gameState.retire = retire;
-  if (gameState.midlife === "wineo") {
+  //gameState.retire = retire;
+  if (midlife === "wineo") {
     gameState.wineo = 1;
     gameState.hobby = hobbyObj.Wineo;
   }
@@ -243,8 +241,6 @@ module.exports = {
   haveKids,
   getJob,
   rockStar,
-  dinkCrisis,
-  nuclearFamCrisis,
   midLifeCrisis,
   retirementOption,
   thisMustBeTheEnd,
